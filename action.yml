@@ -36,5 +36,5 @@ runs:
       run: wget https://github.com/sonargraph/metric-extractor/releases/download/1.3/MetricExtractor-1.3-jar-with-dependencies.jar
       shell: bash
     - name: Extract metrics from  XML report
-      run: java -jar MetricExtractor-1.3-jar-with-dependencies.jar -branch=${{env.GIT_BRANCH_NAME}} -host=${{ inputs.host }} -org=${{ inputs.org }} target/sonargraph/${{env.GIT_BRANCH_NAME}}.xml
+      run: java -jar MetricExtractor-1.3-jar-with-dependencies.jar -branch=${{env.GIT_BRANCH_NAME}} -host="${{ inputs.host }}" -org=${{ inputs.org }} target/sonargraph/${{env.GIT_BRANCH_NAME}}.xml
       shell: bash
