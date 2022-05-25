@@ -1,0 +1,40 @@
+name: 'Sonargraph Maven Action'
+description: 'Action to upload Sonargraph metrics to Sonargraph-Enterprise for Maven based Java projects'
+inputs:
+  activation_code:
+    description: 'Sonargraph activation code'
+    required: false
+    default: '1E05-733B-3BCD-E9A7'
+  host:
+    description: 'Sonargraph-Enterprise base URL'
+    required: false
+    default: 'https://enterprise.hello2morrow.com'
+  org:
+    description: 'Organization owning the project'
+    required: false
+    default: ''
+runs:
+  using: "composite"
+  steps:
+    - name: Git branch name
+      id: git-branch-name
+      uses: EthanSK/git-branch-name-action@v1
+    - name: Echo the branch name
+      run: echo "Branch name ${GIT_BRANCH_NAME}"
+      shell: bash
+    - name: Create Maven settings
+      uses: whelk-io/maven-settings-xml-action@v20
+      with:
+        plugin_repositories: '[{ "id": "hello2morrow-repository", "url": "https://maven.hello2morrow.com/repository" }]'
+    - name: Sonargraph Report
+      run: mvn compile com.hello2morrow:sonargraph-maven-plugin:12.2.0:dynamic-report -Dsonargraph.autoUpdate=true -Dsonargraph.activationCode=${{ inputs.activation_code }} -Dsonargraph.reportFormat=xml -Dsonargraph.reportFileName=${{env.GIT_BRANCH_NAME}}
+      shell: bash
+    - name: List reports
+      run: ls -l target/sonargraph
+      shell: bash
+    - name: Download metric extractor
+      run: wget https://github.com/sonargraph/metric-extractor/releases/download/1.3/MetricExtractor-1.3-jar-with-dependencies.jar
+      shell: bash
+    - name: Extract metrics from  XML report
+      run: java -jar MetricExtractor-1.3-jar-with-dependencies.jar -branch=${{env.GIT_BRANCH_NAME}} -host=${{ inputs.host }} -org=${{ inputs.org }} target/sonargraph/${{env.GIT_BRANCH_NAME}}.xml
+      shell: bash
