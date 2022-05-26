@@ -13,6 +13,9 @@ inputs:
     description: 'Organization owning the project'
     required: false
     default: ''
+branding:
+  icon: 'check-square'
+  color: 'green'
 runs:
   using: "composite"
   steps:
