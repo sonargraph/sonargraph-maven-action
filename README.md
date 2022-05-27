@@ -11,7 +11,7 @@ them in charts.
 
 Another positive is that it will allow you to display cool badges with metric values
 in your README.md file (see [sonargraph-integration-access](https://github.com/sonargraph/sonargraph-integration-access)
-as an example). Since Sonargraph-Enterprise store the metrics of your project in
+as an example). Since Sonargraph-Enterprise stores the metrics of your project in
 a database it can make them accessible for badge creation.
 
 Here is an example .yml file that makes use of this action:
@@ -72,8 +72,9 @@ The URL after ```/badges/``` contains the name of your project and then the key 
 the ```org``` parameter is optional, but recommended to avoid name clashes. The initial part for the badge 
 URL is constant.
 
-Here is an incomplete list of available metric keys. The documentation for all
-available Sonargraph metrics can be found [here](https://eclipse.hello2morrow.com/doc/standalone/content/metric_definitions.html):
+The documentation for all available Sonargraph metrics can be found [here](https://eclipse.hello2morrow.com/doc/standalone/content/metric_definitions.html). There
+is also a [brand-new book](https://www.oreilly.com/library/view/software-architecture-metrics/9781098112226/), that explains some of these metrics in detail. Here
+is an incomplete list of available metrics:
 
 | Key | Description                                                                                                                                                  |
 |---|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
